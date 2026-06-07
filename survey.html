@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 40%, #c2e9fb 100%);
+            padding: 20px; 
+            margin: 0;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 40px auto; 
+            background: rgba(255, 255, 255, 0.92);
+            padding: 35px;
+            border-radius: 16px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
+            backdrop-filter: blur(10px);
+        }
+        h1 { 
+            text-align: center; 
+            color: #333; 
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+        }
+        label { 
+            display: block; 
+            margin: 15px 0 5px; 
+            font-weight: bold; 
+            color: #444;
+        }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            box-sizing: border-box;
+            font-size: 16px;
+            background: rgba(255,255,255,0.8);
+        }
+        .radio-group, .checkbox-group {
+            margin: 10px 0;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline-block;
+            margin-right: 20px;
+            font-weight: normal;
+            color: #555;
+        }
+        button { 
+            margin-top: 25px; 
+            padding: 14px 32px; 
+            background: #ff6b9d; 
+            color: white; 
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-size: 16px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255,107,157,0.4);
+        }
+        button:hover { 
+            background: #ff4d8b; 
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            animation: fadeIn 0.4s;
+            max-width: 400px;
+        }
+        .modal-content h2 {
+            color: #ff6b9d;
+            margin-bottom: 15px;
+        }
+        .checkmark {
+            font-size: 70px;
+            color: #ff6b9d;
+            margin-bottom: 15px;
+        }
+        .close-btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #ff6b9d;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255,107,157,0.4);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customer Satisfaction Survey</h1>
+        <form id="surveyForm">
+            <label>Name</label>
+            <input type="text" required>
+
+            <label>Email</label>
+            <input type="email" required>
+
+            <label>Age</label>
+            <input type="number" min="1" max="120">
+
+            <label>How satisfied are you with our service?</label>
+            <select required>
+                <option value="">Select</option>
+                <option>Very Satisfied</option>
+                <option>Satisfied</option>
+                <option>Neutral</option>
+                <option>Unsatisfied</option>
+            </select>
+
+            <label>Would you recommend us?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="recommend" value="yes" required> Yes</label>
+                <label><input type="radio" name="recommend" value="no"> No</label>
+            </div>
+
+            <label>Features you like (select all)</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox"> Fast Delivery</label>
+                <label><input type="checkbox"> Quality Products</label>
+                <label><input type="checkbox"> Customer Support</label>
+            </div>
+
+            <label>Any comments?</label>
+            <textarea rows="4"></textarea>
+
+            <button type="button" onclick="submitSurvey()">Submit Survey</button>
+        </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="checkmark">✓</div>
+            <h2>Success!</h2>
+            <p>Your survey has been submitted successfully.</p>
+            <button class="close-btn" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('successModal');
+        const form = document.getElementById('surveyForm');
+
+        function submitSurvey() {
+            if (form.checkValidity()) {
+                modal.style.display = 'flex';
+                form.reset();
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
